@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f7e9a0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+
+        .header h1 {
+            color: #ff69b4;
+            font-size: 3em;
+            text-shadow: 2px 2px #ffabac;
+        }
+
+        .message {
+            font-size: 1.5em;
+            color: #ff8c00;
+            margin-top: 20px;
+        }
+
+        #countdown {
+            font-size: 2em;
+            color: #ff8c00;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #ff69b4;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff8c00;
+        }
+
+        /* Confetti */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        /* Hidden birthday content */
+        #birthdayPage {
+            display: none;
+        }
+
+        /* Slideshow Styles */
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+            margin-top: 50px;
+        }
+
+        .slides {
+            display: none;
+        }
+
+        img, video {
+            border-radius: 10px;
+            width: 100%;
+            height: auto;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: #717171;
+        }
+
+        /* Hidden video section */
+        #personalVideo {
+            display: none;
+            margin-top: 20px;
+        }
+
+        /* Hidden gift message */
+        #giftMessage {
+            display: none;
+            margin-top: 20px;
+        }
+
+        /* Hidden Spotify playlist */
+        #spotifyPlaylist {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Countdown Page -->
+    <div class="container" id="countdownPage">
+        <div class="header">
+            <h1>🎉 The Surprise Awaits 🎉</h1>
+        </div>
+        <p id="countdownMessage" class="message">Not time yet to open the gifts! Check back soon.</p>
+        <div id="countdown"></div>
+    </div>
+
+    <!-- Birthday Surprise Page -->
+    <div class="container" id="birthdayPage">
+        <canvas id="confetti-canvas"></canvas>
+        <div class="header">
+            <h1>🎉 Happy Birthday, Abeer meri kabira humari teddy bear! 🎉</h1>
+        </div>
+        <button id="playMusic">Click to Play Birthday Song</button>
+        <audio id="birthdaySong" src="Happy Birthday To You Ji(PagalWorld.com.sb).mp3"></audio>
+
+        <!-- Slideshow Section -->
+        <div class="slideshow-container">
+            <div class="slides">
+                <img src="image.png" alt="Photo 1">
+            </div>
+            <div class="slides">
+                <img src="WhatsApp Image 2024-09-30 at 16.51.51_75f01f9b.jpg" alt="Photo 2">
+            </div>
+            <div class="slides">
+                <video controls>
+                    <source src="WhatsApp Video 2024-09-30 at 17.05.03_8c3cbf16.mp4" autoplay controls> 
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+        </div>
+
+        <br>
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+
+        <!-- Personal Video -->
+        <button id="revealVideo">Surprise Video 🎥</button>
+        <div id="personalVideo">
+            <video controls>
+                <source src="WhatsApp Video 2024-09-30 at 16.37.24_f872c69b.mp4" autoplay controls>
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <!-- Spotify Playlist -->
+        <button id="revealPlaylist">Play Your Birthday Playlist 🎶</button>
+        <div id="spotifyPlaylist">
+            <source src ="https://open.spotify.com/playlist/3jJHELoVKO8uh6U7crz3wH?si=453ee336424144e2"> 
+        </div>
+
+       
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <script>
+        const countdownPage = document.getElementById('countdownPage');
+        const birthdayPage = document.getElementById('birthdayPage');
+        const countdownMessage = document.getElementById('countdownMessage');
+        const countdown = document.getElementById('countdown');
+        const birthdayDate = new Date('2024-10-01 00:04:00'); // Set to your friend's birthday
+        function updateCountdown() {
+            const now = new Date();
+            const diff = birthdayDate - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            if (diff < 0) {
+                showBirthdayPage();
+                clearInterval(interval);
+            } else {
+                countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+        }
+
+        // Check birthday status from the backend
+function checkBirthday() {
+    fetch('/api/check-birthday')
+        .then(response => response.json())
+        .then(data => {
+            if (data.unlocked) {
+                showBirthdayPage();
+            } else {
+                countdown.innerHTML = data.message;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// Automatically check every minute
+setInterval(checkBirthday, 60000);
+checkBirthday(); // Initial check
+
+        function showBirthdayPage() {
+            countdownPage.style.display = 'none';
+            birthdayPage.style.display = 'block';
+
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            setInterval(() => {
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.6 }
+                });
+            }, 1000);
+        }
+
+        const interval = setInterval(updateCountdown, 1000);
+
+        // Slideshow Script
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slides");
+            let dots = document.getElementsByClassName("dot");
+
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+
+        // Music Play
+        const playMusicButton = document.getElementById('playMusic');
+        const birthdaySong = document.getElementById('birthdaySong');
+
+        playMusicButton.addEventListener('click', () => {
+            birthdaySong.play();
+            playMusicButton.style.display = 'none';
+        });
+
+        // Reveal Video Script
+        const revealVideoButton = document.getElementById('revealVideo');
+        const personalVideo = document.getElementById('personalVideo');
+
+        revealVideoButton.addEventListener('click', () => {
+            personalVideo.style.display = 'block';
+            revealVideoButton.style.display = 'none';
+        });
+
+        // Reveal Spotify Playlist
+        const revealPlaylistButton = document.getElementById('revealPlaylist');
+        const spotifyPlaylist = document.getElementById('spotifyPlaylist');
+
+        revealPlaylistButton.addEventListener('click', () => {
+            spotifyPlaylist.style.display = 'block';
+            revealPlaylistButton.style.display = 'none';
+        });
+        
+    </script>
+</body>
+</html>
+
+        
